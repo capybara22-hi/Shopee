@@ -113,6 +113,8 @@
     border-radius: 2px;
     display: none;
     animation: fadeIn ease-in 0.3s;
+    z-index: 1;
+    box-shadow: 0 1px 3px #ccc;
 }
 
 /* Lớp giả này dùng để tạo cầu nối giữa "Vào cửa hàng..." với khối mã QR
@@ -159,7 +161,7 @@
 
 .header__notify {
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     top: 118%;
     right: 0;
     width: 404px;
@@ -458,56 +460,6 @@
     border-radius: 2px;
 }
 
-.header__cart {
-    width: 150px;
-    text-align: center;
-}
-.header__cart-wrap {
-    position: relative;
-    display: inline-block;
-    padding: 0 8px;
-}
-
-.header__cart-wrap--amount {
-    background-color: var(--white-color);
-    border-radius: 15px;
-    width: 18px;
-    position: absolute;
-    top: -9px;
-    right: -1px;
-    border: 1px solid #f53e2d;
-}
-
-.header__cart-list {
-    position: absolute;
-    top: calc(100% + 9px);
-    right: -33px;
-    width: 400px;
-    display: none;
-    animation: fadeIn ease-in 0.3s;
-}
-
-.header__cart-wrap:hover .header__cart-list {
-    display: block;
-    cursor: pointer;
-}
-
-.header__cart-no-cart-img {
-    width: 100%;
-    box-shadow: 0 5px 10px #ccc;
-    display: none;
-}
-
-.header__cart-list--no-cart {
-    
-}
-
-
-.header__cart-icon {
-    color: var(--white-color);
-    font-size: 2.4rem;
-}
-
 .header__search-select {
     border-left: 1px solid #ccc;
     padding-left: 16px;
@@ -530,7 +482,7 @@
 .header__search-option {
     position: absolute;
     right: 0;
-    top: 90%;
+    top: 120%;
     width: 130px;
     list-style: none;
     box-shadow: 0 2px 3px #ccc;
@@ -560,7 +512,6 @@
     border-radius: 3px;
     padding: 8px;
     text-align: right;
-    margin-top: 5px;
 }
 
 .header__search-option-item:first-child {
@@ -611,6 +562,7 @@
     box-shadow: 0 1px 3px #666;
     display: none;
     overflow: hidden;
+    z-index: 1;
 }
 
 .header__search-history-heading {
@@ -644,33 +596,92 @@
 
 
 /* CSS list cart */
-.list_cart {
+.header__cart {
+    width: 150px;
+    text-align: center;
+}
+.header__cart-wrap {
+    position: relative;
+    display: inline-block;
+    padding: 0 8px;
+}
+
+.header__cart-wrap--amount {
+    background-color: var(--white-color);
+    border-radius: 15px;
+    width: 18px;
     position: absolute;
+    top: -9px;
+    right: -1px;
+    border: 1px solid #f53e2d;
+}
+
+/* .header__cart-list {
+    position: absolute;
+    top: calc(100% + 9px);
+    right: -33px;
+    width: 400px;
+    animation: fadeIn ease-in 0.3s;
+} */
+
+.header__cart-wrap:hover .header__cart-list {
+    display: block;
+    cursor: pointer;
+}
+
+.header__cart-no-cart-img {
+    width: 100%;
+    box-shadow: 0 5px 10px #ccc;
+    display: none;
+}
+
+.header__cart-list--no-cart {
+    
+}
+
+
+.header__cart-icon {
+    color: var(--white-color);
+    font-size: 2.4rem;
+}
+
+.header__cart-list {
+    position: absolute;
+    top: calc(100% + 9px);
     right: 0;
     width: 430px;
     list-style: none;
     background-color: var(--white-color);
     padding-left: 0;
     box-shadow: 0 0 3px #ccc;
+    animation: fadeIn ease-in 0.3s;
     display: none;
+    z-index: 1;
 }
 
-.header__cart-wrap:hover .list_cart {
+/* Vấn đề phần cart nằm ở chỗ này. Overflow Phải đặt trong list__cart vì chỉ phần list này cần scroll thôi. Nếu đặt bên ngoài ở phần tử cha là header-list-cart thì overflow sẽ ẩn mất các phần tử mà vượt quá giới hạn của phần tử (ở đây nhắc đến before và after) */
+.list_cart {
+    height: 50vh;
+    overflow-y: scroll;
+    padding-left: 0;
+}
+
+.header__cart-wrap:hover .header__cart-list {
     display: block;
 }
 
-.list_cart::after {
+.header__cart-list::after {
     content: "";
     display: block;
     position: absolute;
     right: 0;
     /* background-color: #3a5a98; */
-    top: -16px;
+    top: -30px;
     width: 100px;
-    height: 20px;
+    height: 40px;
 }
 
-.list_cart::before {
+.header__cart-list::before {
     content: "";
     position: absolute;
     right: 0;
@@ -680,7 +691,7 @@
     border-color: transparent transparent var(--white-color) transparent;
 }
 
-.list_cart p {
+.header__cart-list p {
     text-align: left;
     font-size: 1.4rem;
     opacity: 0.5;
@@ -689,6 +700,16 @@
 
 .cart-item-content {
     margin-left: 10px;
+}
+
+.cart-item-content h2 {
+    height: 4rem;
+    line-height: 2rem;
+    overflow: hidden;
+    /* display: flex;
+    flex: 1; */
+    text-align: left;
+    margin: 0;
 }
 
 .cart-item-content p {
@@ -721,14 +742,18 @@
     cursor: pointer;
 }
 
+/* Dùng flex 1 để nó chiếm hết khoảng không gian mà phần tử này có thể chiếm */
 .cart_item_1 {
     display: flex;
+    flex: 1;
+    align-items: center;
 }
 
 .cart_item h2 {
     margin-top: 0;
-    margin-bottom: 5px;
-
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 .cart_item p {
     margin: 0;
@@ -740,12 +765,13 @@
 }
 
 .delete_item {
-    margin-top: 5px;
+    margin-top: 15px;
     font-size: 1.4rem;
     float: right;
     font-style: italic;
     color: #f53e2d;
 }
+
 
 /* App container */
 .app__container {
@@ -1071,4 +1097,86 @@ i.home-product-item__action-like-icon-fill {
     font-size: 1.2rem;
     line-height: 1.4rem;
     color: var(--white-color);
+}
+
+.home-product__pagination {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+/* Footer */
+.footer {
+    padding-top: 16px;
+    border-top: 4px solid var(--primary-color);
+}
+
+.footer_heading {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    color: var(--text-color);
+}
+
+.footer__list {
+    padding-left: 0;
+    list-style: none;
+}
+
+.footer__list-item--link {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #737373;
+    padding: 2px 0;
+    display: flex;
+    align-items: center;
+}
+
+.footer__list-item--link:hover {
+    color: var(--primary-color);
+}
+
+.footer_item-icon {
+    font-size: 1.6rem;
+    margin-top: -1px;
+    margin-right: 8px;
+}
+
+.footer__download {
+    display: flex;
+
+}
+
+.footer__download-qr {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border: 1px solid var(--border-color);
+}
+
+.footer__download-app {
+    flex: 1;
+    margin-left: 16px;
+}
+
+.footer__download-app-img {
+    display: block;
+    height: 20px;
+    margin-bottom: 10px;
+}
+
+.footer__download-app-link {
+    text-decoration: none;
+}
+
+.footer_bottom {
+    padding: 12px 0;
+    background-color: #f5f5f5;
+    margin-top: 30px;
+}
+
+.footer__text {
+    font-size: 1.2rem;
+    margin: 0;
+    text-align: center;
+    font-weight: 500;
+    color: var(--text-color);
 }
